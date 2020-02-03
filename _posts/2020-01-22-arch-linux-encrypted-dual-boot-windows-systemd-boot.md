@@ -15,7 +15,7 @@ From a blank system, install Windows first. During install, partition the disk s
 
 Copy a local image of Arch onto a USB drive. Use `lsblk` to find out, which `/dev/sdX` is your USB drive.
 
-```
+```bash
 dd if=archlinux.img of=/dev/sdX bs=16M && sync
 ```
 
@@ -45,21 +45,21 @@ create a new partition of type `8300` in the free space. No other partitions are
 
 Create an encrypted partition with:
 
-```
+```bash
 cryptsetup -c aes-xts-plain64 -y --use-random luksFormat /dev/sda5
 ```
 
 type the password that you want your partition encrypted under and confirm. After that, open the partition with
 
-```
-# cryptsetup open /dev/sda5 cryptdisk
+```bash
+cryptsetup open /dev/sda5 cryptdisk
 ```
 
 ### Set up LVM and a File System
 
 Although not strictly necessary, we'll also create an LVM volume inside our encrypted partition.
 
-```
+```bash
 pvcreate /dev/mapper/cryptdisk
 vgcreate arch /dev/mapper/cryptdisk
 lvcreate -l +100%FREE arch --name root
@@ -67,13 +67,13 @@ lvcreate -l +100%FREE arch --name root
 
 after that, we can create a file system in our LVM volume
 
-```
+```bash
 mkfs.ext4 /dev/mapper/arch-root
 ```
 
 and mount our new system disk
 
-```
+```bash
 mkdir /mnt
 mount /dev/mapper/arch-root /mnt
 mkdir /mnt/boot
@@ -86,25 +86,25 @@ note that we have **not** created a new EFI partition, but rather mounted the on
 
 Install the basic system packages. This assumes that you are connected to the Internet via Ethernet, which seem the least troublesome option by far.
 
-```
+```bash
 pacstrap /mnt base base-devel linux linux-firmware zsh vim git lvm2
 ```
 
 after that, generate the [fstab](https://wiki.archlinux.org/index.php/fstab) of the new system
 
-```
+```bash
 genfstab -pU /mnt >> /mnt/etc/fstab
 ```
 
 and change into the new systems shell
 
-```
+```bash
 arch-chroot /mnt
 ```
 
 set the time zone, hostname and locale:
 
-```
+```bash
 ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 hwclock --systohc --utc
 
@@ -117,7 +117,7 @@ echo LC_ALL=C >> /etc/locale.conf
 
 set a password for root and create a user that can use `sudo`
 
-```
+```bash
 passwd
 useradd -m -g users -G wheel -s /bin/zsh USERNAME
 passwd USERNAME
@@ -125,13 +125,13 @@ passwd USERNAME
 
 don't forget to enable members of the group `wheel` to use sudo with
 
-```
+```bash
 EDITOR=vim visudo
 ```
 
 and uncommenting the line
 
-```
+```bash
 %wheel ALL=(ALL) ALL
 ```
 
@@ -147,7 +147,7 @@ We need to add a few things to our initial kernel before we can boot our encrypt
 
 To generate a new kernel, run:
 
-  ```
+  ```bash
   mkinitcpio -p linux  
   ```
 
@@ -155,7 +155,7 @@ To generate a new kernel, run:
 
 systemd-boot comes with systemd, which is part of the basic Arch install, so no additional packages are required. Install it to your EFI partition with
 
-```
+```bash
 bootctl --path=/boot install
 ```
 
@@ -171,7 +171,7 @@ editor 0
 
 Secondly, we'll need a dedicated boot entry for our Arch Install under `/boot/loader/entries/arch.conf`:
 
-```
+```bash
 title	Arch Linux Encrypted
 linux	/vmlinuz-linux
 initrd	/initramfs-linux.img
@@ -184,19 +184,19 @@ you can find the UUID of your `/dev/sda5` partition with `blkid /dev/sda5`. When
 
 Exit the system shell and go back to the live system
 
-```
+```bash
 exit
 ```
 
 Unmount the partitions
 
-```
+```bash
 umount -R /mnt
 ```
 
 and reboot
 
-```
+```bash
 reboot
 ```
 
@@ -205,6 +205,6 @@ That's it. You should now be greeted by two entries that allow you to select whe
 ### Bonus: Fix system clock
 Windows sets the system clock to local time, while Linux prefers to set it to UTC. This means that the displayed system time will be incorrect as soon as you switch between the two. I find that it's easiest to fix this by making [Linux use local time](https://www.howtogeek.com/323390/how-to-fix-windows-and-linux-showing-different-times-when-dual-booting/) as well:
 
-```
+```bash
 timedatectl set-local-rtc 1 --adjust-system-clock
 ```
