@@ -9,18 +9,20 @@ description:      'doing digital stuff'
 url:              https://jadeaffenjaeger.github.io
 
 author:
-    name:           'Elias Trommer'
+    name:         'Elias Trommer'
 
 social-network-links:
-    github: https://github.com/jadeaffenjaeger
-    linkedin: https://www.linkedin.com/in/elias-trommer-58a085138
+    github:       https://github.com/jadeaffenjaeger
+    linkedin:     https://www.linkedin.com/in/elias-trommer-58a085138
 
+# 10 entries per page
 paginate: 10
 
 plugins:
     - jekyll-feed
     - jekyll-gist
     - jekyll-paginate
+    - jekyll-sitemap
 
 # Sidebar link settings
 sidebar_home_link:  true
