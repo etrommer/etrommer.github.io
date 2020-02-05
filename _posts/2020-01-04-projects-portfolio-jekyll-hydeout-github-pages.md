@@ -44,7 +44,7 @@ highlighter:      rouge
 title:            'Elias Trommer'
 tagline:          'Tech Blog'
 description:      'doing digital stuff'
-url:              https://jadeaffenjaeger.github.io
+url:              https://etrommer.github.io
 
 author:
     name:         'Elias Trommer'
@@ -67,7 +67,7 @@ plugins:
 sidebar_home_link:  true
 ```
 
-Make sure to remove the line `baseurl: '/hydeout'` if you are running on Github Pages, as otherwise your HTML paths will not be generated correctly.
+Make sure to remove the line `baseurl: '/hydeout'` if you are running on Github Pages, as otherwise your HTML paths will not be generated correctly. You might have noticed that the `social-network-links` section is not present in the original config. It contains the links to my social network profiles, with which the icons in the sidebar are generated. I'll describe below how to add them to the layout.
 
 ## CSS
 
