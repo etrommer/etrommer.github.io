@@ -7,11 +7,11 @@ categories:
 
 I like using the free vector graphics tool [Inkscape](https://inkscape.org/) to draw diagrams for my thesis. However, embedding them into the LaTeX document can be a bit of a pain. While Inkscape offers a dedicated [LaTeX export option](https://tex.stackexchange.com/questions/151232/exporting-from-inkscape-to-latex-via-tikz) which exports drawing and fonts separately so that the rendering is done in LaTeX, I rarely use this option, as the text typically ends up being not where you expect it, which requires a lot of tuning to make things look right.
 
-You can also export the drawing as a pdf and then use that in your LaTeX document, however you'll need to do that hand for every change that you make to your drawing. This gets tedious and annoying really fast, I find
+You can also export the drawing as a pdf and then use that in your LaTeX document, however you'll need to do that by hand for every change that you make to your drawing. This gets tedious and annoying really fast, I find.
 
 ## Shell scripting to the rescue
 
-What I do instead is to make the changes to the Inkscape SVG and have a simple shell script to convert them into a PDF every once in a while using Inkscapes command line interface. 
+What I do instead is to make the changes to the Inkscape SVG and have a separate shell script to convert them into a PDF every once in a while using Inkscape's command line interface. 
 I then simply have to make my changes to the drawing, save it in Inkscape's native format and the updated version will end up in my document, with no further steps needed.
 Here's what my folder structure looks like:
 
@@ -25,7 +25,7 @@ project
     │       └── some_image.svg
     └── project.tex
 ```
-
+Drawings go in the `svg` folder.
 and here's the content of the script:
 
 ```bash
@@ -39,7 +39,7 @@ done
 ```
 It simply converts all the file under `svg` into a PDF of the same name in the folder `pdf`. 
 
-If I add a new file, I'll have to run the script manually once. I get my drawing converted into a PDF which I can then easily embed without issues.
+If I add a new file, I'll have to run the script manually once. I get my drawing converted into a PDF which I can then easily embed like so:
 ```latex
 \begin{figure}[htb!]
 	\includegraphics[width=\linewidth]{img/pdf/some_drawing.pdf}
