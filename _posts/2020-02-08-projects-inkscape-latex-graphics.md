@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Converting Inkscape SVG for use with LaTeX made easy
+title: Converting Inkscape SVGs for use with LaTeX made easy
 categories:
-  - Electronics
+  - Projects
 ---
 
 I like using the free vector graphics tool [Inkscape](https://inkscape.org/) to draw diagrams for my thesis. However, embedding them into the LaTeX document can be a bit of a pain. While Inkscape offers a dedicated [LaTeX export option](https://tex.stackexchange.com/questions/151232/exporting-from-inkscape-to-latex-via-tikz) which exports drawing and fonts separately so that the rendering is done in LaTeX, I rarely use this option, as the text typically ends up being not where you expect it, which requires a lot of tuning to make things look right.
 
-You can also export the drawing as a pdf and then export that, however you'll need to do that hand for every change that you make to your drawing, which gets very tedious very fast.
+You can also export the drawing as a pdf and then use that in your LaTeX document, however you'll need to do that hand for every change that you make to your drawing. This gets tedious and annoying really fast, I find
 
 ## Shell scripting to the rescue
 
