@@ -116,5 +116,13 @@ I've also added a few social icons in the sidebar. To do the same thing, find th
 
 This will check if the `config.yml` contains a link to Github and if so, will generate a social network icon in the sidebar. If the layout seems off, check whether your SVG icon has width and height informations embedded in it. If it does, you'll need to remove them by opening the SVG in a text editor. Find the keywords `width` and `height` and simply remove them from the file. The icon should now be rendered to the correct size.
 
-## Pushing to a repository
+## Publishing your website
 
+So far, your website only lives on your computer. To put it on the internet, you'll need to go to [Github](https://github.com) and create a new repository. The name of your new repository *must* follow the convention `<your username>.github.io`. Also make sure that you **uncheck** the option "Initialize this repository with a README" when creating the repository. Once you're done, click the "Clone or download" button in your repository and copy the URL. You can publish your website with the command
+
+```bash
+git remote set-url origin <your-repository-url>
+git push
+```
+
+If everything worked out, your website should now be available under `<your username>.github.io`!
