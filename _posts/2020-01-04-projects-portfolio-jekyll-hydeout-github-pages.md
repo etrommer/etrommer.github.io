@@ -5,8 +5,7 @@ categories:
   - Projects
 ---
 
-I've dabbled with Wordpress for my personal website before, but it always felt like too much of a hassle for the few things that my website needs to contain. All I really want is static text, a few pictures, code highlighting, preferably in a way that is pleasant enough to look at for extend periods of time. So why spend a lot of time and money on setting up and running databases, JavaScript and PHP? Since a work with git and Markdown most of the time anyway, [Jekyll](https://jekyllrb.com/) is pretty much perfect for what I need. After some very basic setup, it
-provides a static website, just from Markdown documents and can publish through [Github Pages](https://pages.github.com/), simply by pushing to a Github Repository.
+I've dabbled with Wordpress for my personal website before, but it always felt like too much of a hassle for the few things that my website needs to contain. All I really want is static text, a few pictures, code highlighting, preferably in a way that is pleasant enough to look at for extend periods of time. So why spend a lot of time and money on setting up and running databases, JavaScript and PHP? Since a work with git and Markdown most of the time anyway, [Jekyll](https://jekyllrb.com/) is pretty much perfect for what I need. After some very basic setup, it provides a static website, just from Markdown documents and can publish through [Github Pages](https://pages.github.com/), simply by pushing to a Github Repository.
 
 ## Hydeout
 After some looking around, I've settled on the excellent Jekyll theme [Hydeout](https://fongandrew.github.io/hydeout/) which is free under the MIT license, and to which I only had to make a few alterations to tailor it to my liking.
@@ -95,11 +94,11 @@ $sidebar-width: 24rem;
 @import "hydeout";
 ```
 
-I've also changed the colorscheme of the code highlighting to the [Solarized Dark](https://gist.github.com/nicolashery/5765395) color scheme which nicely matches the overall teal look of the rest of the website. To do this, find a CSS colorscheme for Pygments and put it in the folder `assets/css`. The line `@import "solarized.css";` then imports the file by that name. To override the defaults of Hydeout, you'll also have to comment out the line `@import "hydeout/syntax";` in the file `_sass/hydeout.scss`. This will make sure that the default code highlighting configuration will not be included.
+I've also changed the color scheme of the code highlighting to the [Solarized Dark](https://gist.github.com/nicolashery/5765395) color scheme which nicely matches the overall teal look of the rest of the website. To do this, find a CSS colorscheme for Pygments and put it in the folder `assets/css`. The line `@import "solarized.css";` then imports the file by that name. To override the defaults of Hydeout, you'll also have to comment out the line `@import "hydeout/syntax";` in the file `_sass/hydeout.scss`. This will make sure that the default code highlighting configuration will not be included.
 
 ## Social network icons
 
-I've also added a few social icons in the sidebar. To do the same thing, find the icon of your preferred social network as an SVG file and place it under `_incudes/svg`. Then add an entry like this to the file `_inlcudes/custom_icon_links.html`:
+I've also added a few social icons in the sidebar. To do the same thing, find the icon of your preferred social network as an SVG file and place it under `_includes/svg`. Then add an entry like this to the file `_includes/custom_icon_links.html`:
 
 ```html
 {% raw %}
@@ -115,7 +114,7 @@ I've also added a few social icons in the sidebar. To do the same thing, find th
 {% endraw %}
 ```
 
-This will check if the `config.yml` contains a link to Github and if so, will generate a social network icon in the sidebar. If the layout seems of, check whether your SVG icon has width and height informations embedded in it. If so, you'll need to remove them by opening the SVG in a text editor. Find the keywords `width` and `height` and simply remove them. from the file. The should now be rendered to the correct size.
+This will check if the `config.yml` contains a link to Github and if so, will generate a social network icon in the sidebar. If the layout seems off, check whether your SVG icon has width and height informations embedded in it. If it does, you'll need to remove them by opening the SVG in a text editor. Find the keywords `width` and `height` and simply remove them from the file. The icon should now be rendered to the correct size.
 
 ## Pushing to a repository
 
