@@ -5,7 +5,10 @@ categories:
   - Projects
 ---
 
-I've always enjoyed solving programming puzzles. A month and a half of quarantine also gave my sufficient time for finally starting to pick up the Rust programming language. After skimming through the [Rust Book](https://doc.rust-lang.org/book/) and doing the [Rustlings Exercises](https://github.com/rust-lang/rustlings) (which I can highly recommend if you want are the learning-by-doing type), I felt prepared enough to tackle a few slightly larger challenges.
+I've always enjoyed solving programming puzzles. A month and a half of quarantine also gave my sufficient time for finally starting to pick up the Rust programming language. After skimming through the [Rust Book](https://doc.rust-lang.org/book/) and doing the [Rustlings Exercises](https://github.com/rust-lang/rustlings) (which I can highly recommend if you want are the learning-by-doing type), I felt prepared enough to tackle a few slightly larger challenges. I've (partially) done [Project
+Euler](https://projecteuler.net/) and [cryptopals](https://cryptopals.com/) before, so I'm not entirely new to programming puzzles. 
+
+If you would like to follow along with my Advent of Code 2019 journey, then you can find my code in [Github](https://github.com/jadeaffenjaeger/rust_aoc19)
 
 ## Advent of Code
 [Advent of Code](https://adventofcode.com/) is an annual advent calendar that has a programming puzzle behind each door. I went through the puzzles from 2019 and implement them in Rust in order to get a better understanding of the language. Compared to other coding challenges I have done, Advent of Code spans a relatively large field of required skills/methods (at least that's how I perceived it). As of now, I have only halfway completed the 2019 edition and already had to implement
