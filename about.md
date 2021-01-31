@@ -9,8 +9,9 @@ Hi, and welcome to my personal blog. My name is Elias and over time, I've learne
 my projects.
 
 ### The _Me_ section
-No personal blog would be complete without me introducing myself, so here we go: I live in Berlin and Dresden, have recently graduated in Computer Engineering and am currently pursuing a Ph.D. in hardware design for machine learning. I'm interested in electronics, PCB design, microcontrollers and also sometimes play around with VHDL, GPGPU programming and IT Security. I've been trying to pick up at least some basic web development recently, though with limited success this far.
+No personal blog would be complete without me introducing myself, so here we go: I live in Berlin and Dresden, have recently graduated in Computer Engineering and am currently pursuing a Ph.D. in hardware design and low-level software design for machine learning. I'm interested in electronics, PCB design, microcontrollers and also sometimes play around with VHDL, GPGPU programming and IT Security. I've been trying to pick up at least some basic web development recently. Success
+with that has been limited, though.
 
-Also, here's a selfie of me with a llama:
+I'm also terrible at selfies, so here's a rare picture of me looking somewhat presentable (being on vacation probably helped):
 
-![Me and a llama](assets/images/me_and_llama.jpg)
+![Elias Trommer Portrait](assets/images/portrait_prague.jpeg)
