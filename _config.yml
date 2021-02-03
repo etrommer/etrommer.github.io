@@ -11,6 +11,10 @@ url:              https://etrommer.github.io
 author:
     name:         'Elias Trommer'
 
+relative_links:
+  enabled:     true
+  collections: true
+
 social-network-links:
     github:       https://github.com/jadeaffenjaeger
     linkedin:     https://www.linkedin.com/in/elias-trommer-58a085138
@@ -20,6 +24,7 @@ paginate: 10
 
 plugins:
     - jekyll-feed
+    - jekyll-relative-links
     - jekyll-gist
     - jekyll-paginate
     - jekyll-sitemap
