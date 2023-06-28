@@ -1,0 +1,33 @@
+# The URL the site will be built for
+base_url = "https://etrommer.github.io"
+title = "Elias Trommer"
+description = "big data and small devices"
+
+compile_sass = true
+theme = "hype"
+
+generate_feed = true
+
+build_search_index = true
+
+[markdown]
+highlight_code = true
+highlight_theme = "material-dark"
+
+[extra]
+use_katex = true
+hyde_sticky = true
+hyde_reverse = false
+hyde_theme = "theme-hype"
+hyde_links = [
+    {url = "/blog", name = "Blog"},
+    {url = "/resume", name = "Résumé"},
+]
+hyde_social_links = [
+   {url = "/contact", set="solid", name = "envelope"},
+   {url = "/atom.xml", set="solid", name = "rss"},
+   {url = "https://github.com/etrommer", set="brands", name = "github"},
+   {url = "https://www.linkedin.com/in/elias-trommer-58a085138", set="brands", name = "linkedin"},
+   {url = "https://scholar.google.com/citations?user=cwViTooAAAAJ", set="solid", name = "graduation-cap"},
+]
+# Put all your custom variables here

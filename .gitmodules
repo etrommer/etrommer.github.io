@@ -1,0 +1,3 @@
+[submodule "themes/hype"]
+	path = themes/hype
+	url = https://github.com/etrommer/hype.git
