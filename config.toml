@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://etrommer.github.io"
+base_url = "https://etrommer.de"
 title = "Elias Trommer"
 description = "big data and small devices"
 
