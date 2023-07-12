@@ -28,6 +28,6 @@ hyde_social_links = [
    {url = "/atom.xml", set="solid", name = "rss"},
    {url = "https://github.com/etrommer", set="brands", name = "github"},
    {url = "https://www.linkedin.com/in/elias-trommer-58a085138", set="brands", name = "linkedin"},
-   {url = "https://scholar.google.com/citations?user=cwViTooAAAAJ", set="solid", name = "graduation-cap"},
+   {url = "https://mastodon.online/@jadeaffenjaeger", set="brands", name = "mastodon"},
 ]
 # Put all your custom variables here
