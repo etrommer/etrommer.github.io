@@ -5,6 +5,9 @@ template = "plain.html"
 My detailed PDF résumé is available [upon request](/contact)
 ## Publications
 ### 2023
+- **What is this? A machine learning model for ants?**  
+  presentation held at [37th Chaos Communication Congress](https://de.wikipedia.org/wiki/Chaos_Communication_Congress)  
+  [<i class="fa-solid fa-video"></i>Recording](https://media.ccc.de/v/37c3-11844-what_is_this_a_machine_learning_model_for_ants)
 - **[High-Throughput Approximate Multiplication Models in PyTorch](https://ieeexplore.ieee.org/abstract/document/10139366)**  
   published in: _26th Symposium on Design and Diagnostics of Electronic Circuits and Systems (DDECS '23)_  
   [<i class="fa-brands fa-github"></i>Github](https://github.com/etrommer/torch-approx)
