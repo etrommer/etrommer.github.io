@@ -14,7 +14,7 @@ sufficient driving power usually requires quite a few components. Not ideal for 
 ## 2. Circuit Design
 The sender circuit is almost a verbatim copy from the reference circuit found in the datasheet
 
-![Sender Circuit](/images/ultrasonic/circuit_sender.png)
+![Sender Circuit](circuit_sender.png)
 
 Here are the individual pins and what we are using them for:
 - `T1OUT/T2OUT`: High voltage outputs that will drive our speaker

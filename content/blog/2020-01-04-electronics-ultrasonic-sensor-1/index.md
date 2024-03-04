@@ -30,7 +30,7 @@ Let's go over what each stage does in more detail:
 
 Here's a schematic of what the first stage looks like:
 
-![Inverting High Pass Amplifier](/images/ultrasonic/inverting_amp.png)
+![Inverting High Pass Amplifier](inverting_amp.png)
 
 now let's go over what it does in detail. It's first order high pass, meaning that it attenuates lower frequencies while letting higher frequencies pass. First order comes from the fact that there is only one element in there that influences the frequency response, namely the capacitor. In the original circuit, the value of **R1** is 47k. I've increased this to be 75k, just like in Stage 3 to get a bit more amplification. Now let's do some math to find out how the circuit behaves: 
 
@@ -52,7 +52,7 @@ So we're getting 7.5 times the input signal with a 3db attenuation at 1592 kHz. 
 
 The second stage is quite a bit more complicated. While first order amplifiers can only amplify high **or** low frequencies, a bandpass needs more parts, but can amplify frequencies *around* a specific center frequency and attenuate everything else that's further away. We will use a rather clever circuit known as a [Multiple Feedback Band-Pass Filter](http://www.ecircuitcenter.com/Circuits/MFB_bandpass/MFB_bandpass.htm) for this. It looks like this:
 
-![Multiple Feedback Band-Pass](/images/ultrasonic/mf_bandpass.png)
+![Multiple Feedback Band-Pass](mf_bandpass.png)
 
 It's helps to pick **C1 = C2** so that the calculations are a bit easier. Here are the filter characteristics:
 
@@ -84,11 +84,11 @@ As mentioned above, this stage is the same as the first stage, which means that 
 
 I don't have that much experience with analog design, so I recreated the circuit in [LTSpice](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html), an analog circuit simulation software that you can use for free. Before I designed everything into a board, I wanted to be sure that I hadn't made any really obvious mistakes in the receiver circuit.
 
-[![LT Spice Circuit](/images/ultrasonic/ltspice_circuit.png)](/images/ultrasonic/ltspice_circuit.png)
+[![LT Spice Circuit](ltspice_circuit.png)](ltspice_circuit.png)
 
 with that in place, I simulated the frequency response of stages 1-3 for frequencies between 20kHz and 60kHz.
 
-[![LT Spice Simulation Result](/images/ultrasonic/ltspice_sim.png)](/images/ultrasonic/ltspice_sim.png)
+[![LT Spice Simulation Result](ltspice_sim.png)](ltspice_sim.png)
 
 It shows that the circuit has the highest amplification around 40kHz and that the amplification factor drops off steeply to both sides. Yay! It seems that - at least in theory - our circuit works as expected!
 
@@ -96,19 +96,19 @@ It shows that the circuit has the highest amplification around 40kHz and that th
 
 Out of our amplifier stages, we are getting a 40kHz signal in which some peaks are higher than others. We could do some magic in software to retrieve the distance information from those peaks. What we would want to have ideally would be a smooth signal that is flat when nothing is detected and with a spike for each reflection. This is where [Envelope Detection](https://en.wikipedia.org/wiki/Envelope_detector) is useful: It transforms our high-frequency signal with many peaks into its *envelope*. Here's an idealized drawing of an envelope detector on a modulated signal:
 
-![Ideal Envelope Detection](/images/ultrasonic/envelope_ideal.png)
+![Ideal Envelope Detection](envelope_ideal.png)
 
 In this drawing, our detector can - somewhat magically - predict the future, because it conveniently rises to the next peak before it has even occurred. The output of a real one will probably look a bit more rough.
 
 Here's the circuit of the envelope detection:
 
-![Envelope Detection Circuit](/images/ultrasonic/envelope_circuit.png)
+![Envelope Detection Circuit](envelope_circuit.png)
 
 Let's go over what the individual parts do: The diode **D1** removes the bottom half wave, leaving only the upper half. Each peak charges **C1**. After each peak, C1 slowly discharges through **R1**. R1 needs to be small enough for the voltage of C1 to decay over time, yet large enough that it doesn't drop immediately. I've experimented with the values in LTSpice until I was happy with the behavior in the simulation. **C2** then removes the DC component of the signal, making sure that we don't have a constant offset in our envelope. 
 
 Here's what happens when we simulate the circuit it in LTSpice:
 
-[![LT Spice Envelope Simulation](/images/ultrasonic/ltspice_envelope_sim.png)](/images/ultrasonic/ltspice_envelope_sim.png)
+[![LT Spice Envelope Simulation](ltspice_envelope_sim.png)](ltspice_envelope_sim.png)
 
 ...not quite the same as the ideal one above, but good enough! (Ignore the voltages on the y-axis. They don't mean anything since our input signal will be a few mV, not Volts, like I used in the simulation)
 
