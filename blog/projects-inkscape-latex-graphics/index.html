@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <!-- viewport-fit=cover is to support iPhone X rounded corners and notch in landscape-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+
+      <title>Elias Trommer</title>
+
+      <!-- CSS -->
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      
+      <link rel="stylesheet" href="https://etrommer.de/print.css" media="print">
+      <link rel="stylesheet" href="https://etrommer.de/poole.css">
+      <link rel="stylesheet" href="https://etrommer.de/hyde.css">
+      <link rel="stylesheet" href="https://etrommer.de/custom.css">
+      
+      <link rel="stylesheet" href="https://etrommer.de/hype.css">
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+      <link rel="icon" type="image/png" href=https://etrommer.de/favicon.png />
+
+      
+      <link rel="alternate" type="application/atom+xml" title="RSS" href="https://etrommer.de/atom.xml">
+      
+
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script>
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+      
+      
+      
+    </head>
+
+    <body class="theme-hype ">
+        
+            <div class="sidebar">
+                <div class="container sidebar-sticky">
+                    <div class="sidebar-about">
+                        
+                            <a href="https:&#x2F;&#x2F;etrommer.de"><h1>Elias Trommer</h1></a>
+                            
+                            <p class="lead">big data and small devices</p>
+                            
+                        
+                    </div>
+                    <ul class="sidebar-nav">
+                        
+                        
+                        <li class="sidebar-nav-item"><a href="&#x2F;blog">Blog</a></li>
+                        
+                        <li class="sidebar-nav-item"><a href="&#x2F;resume">Résumé</a></li>
+                        
+                        
+                    </ul>
+                    
+                    
+                    <div class="social-icons">
+                        
+                        <a href="&#x2F;contact"><i class="fa-solid fa-envelope"></i></a>
+                        
+                        <a href="&#x2F;atom.xml"><i class="fa-solid fa-rss"></i></a>
+                        
+                        <a href="https:&#x2F;&#x2F;github.com&#x2F;etrommer"><i class="fa-brands fa-github"></i></a>
+                        
+                        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;elias-trommer-58a085138"><i class="fa-brands fa-linkedin"></i></a>
+                        
+                        <a href="https:&#x2F;&#x2F;mastodon.online&#x2F;@jadeaffenjaeger"><i class="fa-brands fa-mastodon"></i></a>
+                        
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        
+        <div class="content container">
+            
+<div class="post">
+  <h1 class="post-title">Exporting InkScape drawings with zero clicks</h1>
+  <span class="post-date">2020-02-08</span>
+  <p>Workflow for automatically converting InkScape SVGs into PDFs that can seamlessly be included in LaTeX drawings.</p>
+<span id="continue-reading"></span>
+<p>I like using <a href="https://inkscape.org/">Inkscape</a> to draw diagrams for my thesis. However, embedding them into the LaTeX document can be a bit of a pain. While Inkscape offers a dedicated <a href="https://tex.stackexchange.com/questions/151232/exporting-from-inkscape-to-latex-via-tikz">LaTeX export option</a> which exports drawing and fonts separately so that the rendering is done in LaTeX, I rarely use this option, as the text typically ends up being not where you expect it, which requires a lot of tuning to make things look right.</p>
+<p>You can also export the drawing as a pdf manually and then use that in your LaTeX document, however you'll need to do that by hand every time you change something. This gets very tedious, very fast if you are like me and tend to over-optimize your drawings through countless iterations.</p>
+<h2 id="solution-1-shell-scripting-to-the-rescue">Solution 1: Shell scripting to the rescue</h2>
+<p>The first solution that I've come up with instead is to make the changes to the Inkscape SVG and have a separate shell script to convert them into a PDF every once in a while using Inkscape's command line interface. 
+I then simply have to make my changes to the drawing, save it in Inkscape's native format and the updated version will end up in my document, with no further steps needed.
+Here's what my folder structure looks like:</p>
+<pre style="background-color:#212121;color:#eeffff;"><code><span>project
+</span><span>    ├── img
+</span><span>    │   ├── convert_svg.sh
+</span><span>    │   ├── pdf
+</span><span>    │   │   └── some_image.pdf
+</span><span>    │   └── svg
+</span><span>    │       └── some_image.svg
+</span><span>    └── project.tex
+</span></code></pre>
+<p>Drawings go in the <code>svg</code> folder.
+and here's the content of the script:</p>
+<pre data-lang="bash" style="background-color:#212121;color:#eeffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="font-style:italic;color:#4a4a4a;">#!/bin/bash
+</span><span style="font-style:italic;color:#c792ea;">for</span><span> file </span><span style="font-style:italic;color:#c792ea;">in</span><span> svg/</span><span style="color:#89ddff;">*</span><span>.svg</span><span style="color:#89ddff;">;
+</span><span style="font-style:italic;color:#c792ea;">do
+</span><span>    </span><span style="color:#82aaff;">echo </span><span style="color:#89ddff;">&quot;</span><span style="color:#c3e88d;">Converting: </span><span style="color:#89ddff;">$</span><span>file</span><span style="color:#89ddff;">&quot;
+</span><span>    output_name</span><span style="color:#89ddff;">=&quot;</span><span style="color:#c3e88d;">pdf/</span><span style="color:#89ddff;">$(</span><span style="color:#82aaff;">basename</span><span style="color:#89ddff;"> -</span><span style="color:#f78c6c;">s</span><span style="color:#82aaff;"> .svg </span><span style="color:#89ddff;">$</span><span>file</span><span style="color:#89ddff;">)</span><span style="color:#c3e88d;">.pdf</span><span style="color:#89ddff;">&quot;
+</span><span>    </span><span style="color:#82aaff;">inkscape</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">export-pdf</span><span style="color:#89ddff;">=$</span><span>output_name</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">export-area-drawing </span><span style="color:#89ddff;">$</span><span>file
+</span><span style="font-style:italic;color:#c792ea;">done
+</span></code></pre>
+<p>It simply converts all the file under <code>svg</code> into a PDF of the same name in the folder <code>pdf</code>. </p>
+<h2 id="solution-2-makefile">Solution 2: Makefile</h2>
+<p>One downside to this is that each file is generated once the script is run, regardless of whether it was updated or not. While this is not a major deal because converting only takes a few seconds, there is an issue when using the files in Git. Git will pick up all of the PDFs and list them as unstaged changes, even though nothing has changed with them. The solution to that is to only convert the files when there are actual changes. The perfect job for a Makefile!
+Here's the content of the Makefile that I have in the <code>img</code> folder:</p>
+<pre data-lang="make" style="background-color:#212121;color:#eeffff;" class="language-make "><code class="language-make" data-lang="make"><span style="font-style:italic;color:#4a4a4a;"># Inkscape SVG to PDF Makefile
+</span><span>
+</span><span style="font-style:italic;color:#4a4a4a;"># Input directory
+</span><span>SVGDIR </span><span style="color:#89ddff;">= </span><span style="color:#c3e88d;">svg
+</span><span>
+</span><span style="font-style:italic;color:#4a4a4a;"># Output directory
+</span><span>PDFDIR </span><span style="color:#89ddff;">= </span><span style="color:#c3e88d;">pdf
+</span><span>
+</span><span style="font-style:italic;color:#4a4a4a;"># Collect SVGs from input folder
+</span><span>SVGS </span><span style="color:#89ddff;">= </span><span style="color:#c792ea;">$(</span><span style="color:#82aaff;">wildcard </span><span style="color:#c792ea;">$(</span><span style="color:#f78c6c;">SVGDIR</span><span style="color:#c792ea;">)</span><span style="color:#82aaff;">/</span><span style="font-style:italic;color:#ff5370;">*</span><span style="color:#82aaff;">.svg</span><span style="color:#c792ea;">)
+</span><span>PDFS </span><span style="color:#89ddff;">= </span><span style="color:#c792ea;">$(</span><span style="color:#82aaff;">patsubst </span><span style="color:#c792ea;">$(</span><span style="color:#f78c6c;">SVGDIR</span><span style="color:#c792ea;">)</span><span style="color:#82aaff;">/</span><span style="font-style:italic;color:#ff5370;">%</span><span style="color:#82aaff;">.svg</span><span style="color:#89ddff;">, </span><span style="color:#c792ea;">$(</span><span style="color:#f78c6c;">PDFDIR</span><span style="color:#c792ea;">)</span><span style="color:#82aaff;">/</span><span style="font-style:italic;color:#ff5370;">%</span><span style="color:#82aaff;">.pdf</span><span style="color:#89ddff;">, </span><span style="color:#c792ea;">$(</span><span style="color:#f78c6c;">SVGS</span><span style="color:#c792ea;">))
+</span><span>
+</span><span style="font-style:italic;color:#4a4a4a;"># Build recipe for PDFs
+</span><span style="color:#c792ea;">$(</span><span style="color:#f78c6c;">PDFDIR</span><span style="color:#c792ea;">)</span><span style="color:#82aaff;">/</span><span style="font-style:italic;color:#ff5370;">%</span><span style="color:#82aaff;">.pdf</span><span style="color:#89ddff;">: </span><span style="color:#c792ea;">$(</span><span style="color:#f78c6c;">SVGDIR</span><span style="color:#c792ea;">)</span><span style="color:#c3e88d;">/</span><span style="font-style:italic;color:#ff5370;">%</span><span style="color:#c3e88d;">.svg
+</span><span>        </span><span style="color:#82aaff;">inkscape</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">export-pdf</span><span style="color:#89ddff;">=</span><span style="font-style:italic;color:#ff5370;">$@</span><span style="color:#89ddff;"> --</span><span style="color:#f78c6c;">export-area-drawing </span><span style="font-style:italic;color:#ff5370;">$^
+</span><span>
+</span><span style="font-style:italic;color:#4a4a4a;"># Create output dir if necessary
+</span><span style="color:#c792ea;">$(</span><span style="color:#f78c6c;">PDFDIR</span><span style="color:#c792ea;">)</span><span style="color:#89ddff;">:
+</span><span>        </span><span style="color:#82aaff;">mkdir</span><span style="color:#89ddff;"> -</span><span style="color:#f78c6c;">p </span><span style="font-style:italic;color:#ff5370;">$@
+</span><span>
+</span><span style="color:#82aaff;">.PHONY</span><span style="color:#89ddff;">: </span><span style="color:#c3e88d;">all clean
+</span><span>
+</span><span style="color:#82aaff;">all</span><span style="color:#89ddff;">: </span><span style="color:#c792ea;">$(</span><span style="color:#f78c6c;">PDFDIR</span><span style="color:#c792ea;">) $(</span><span style="color:#f78c6c;">PDFS</span><span style="color:#c792ea;">)
+</span><span>
+</span><span style="color:#82aaff;">clean</span><span style="color:#89ddff;">:
+</span><span>        </span><span style="color:#f78c6c;">@</span><span style="color:#82aaff;">echo </span><span style="color:#89ddff;">&quot;</span><span style="color:#c3e88d;">Removing previously generated PDFs</span><span style="color:#89ddff;">&quot;
+</span><span>        </span><span style="color:#82aaff;">rm</span><span style="color:#89ddff;"> -</span><span style="color:#f78c6c;">rf </span><span style="color:#c792ea;">$(</span><span style="color:#f78c6c;">PDFDIR</span><span style="color:#c792ea;">)
+</span><span>        </span><span style="color:#f78c6c;">@</span><span style="color:#82aaff;">echo </span><span style="color:#89ddff;">&quot;</span><span style="color:#c3e88d;">Done.</span><span style="color:#89ddff;">&quot;
+</span></code></pre>
+<p>From the top-level directory, I can then convert all my updated SVGs at once with <code>make -C img all</code>.</p>
+<h2 id="workflow">Workflow</h2>
+<p>Whenever I add a new file, I'll have to run the makefile manually once. I get my drawing converted into a PDF which I can then easily embed like so:</p>
+<pre data-lang="latex" style="background-color:#212121;color:#eeffff;" class="language-latex "><code class="language-latex" data-lang="latex"><span style="font-style:italic;color:#89ddff;">\</span><span style="font-style:italic;color:#c792ea;">begin</span><span style="color:#89ddff;">{</span><span style="color:#f78c6c;">figure</span><span style="color:#89ddff;">}[</span><span>htb!</span><span style="color:#89ddff;">]
+</span><span>	</span><span style="color:#89ddff;">\</span><span style="color:#82aaff;">includegraphics</span><span style="color:#89ddff;">[</span><span style="color:#f78c6c;">width</span><span>=</span><span style="color:#89ddff;">\</span><span style="color:#82aaff;">linewidth</span><span style="color:#89ddff;">]{</span><span>img/pdf/some_drawing.pdf</span><span style="color:#89ddff;">}
+</span><span>	</span><span style="color:#89ddff;">\</span><span style="color:#82aaff;">centering
+</span><span>	</span><span style="color:#89ddff;">\</span><span style="color:#82aaff;">caption</span><span style="color:#89ddff;">{</span><span>Some drawing</span><span style="color:#89ddff;">}
+</span><span style="font-style:italic;color:#89ddff;">\</span><span style="font-style:italic;color:#c792ea;">end</span><span style="color:#89ddff;">{</span><span style="color:#f78c6c;">figure</span><span style="color:#89ddff;">}
+</span></code></pre>
+<p>I also have the script attached to git pre-commit hook that converts all SVGs automatically before every commit. That way, my SVG changes will always be reflected in my document without any additional trouble caused by converting files back an forth. I'm generally very happy with this solution!</p>
+
+</div>
+
+        </div>
+    </body>
+</html>

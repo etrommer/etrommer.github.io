@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <!-- viewport-fit=cover is to support iPhone X rounded corners and notch in landscape-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+
+      <title>Elias Trommer</title>
+
+      <!-- CSS -->
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      
+      <link rel="stylesheet" href="https://etrommer.de/print.css" media="print">
+      <link rel="stylesheet" href="https://etrommer.de/poole.css">
+      <link rel="stylesheet" href="https://etrommer.de/hyde.css">
+      <link rel="stylesheet" href="https://etrommer.de/custom.css">
+      
+      <link rel="stylesheet" href="https://etrommer.de/hype.css">
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+      <link rel="icon" type="image/png" href=https://etrommer.de/favicon.png />
+
+      
+      <link rel="alternate" type="application/atom+xml" title="RSS" href="https://etrommer.de/atom.xml">
+      
+
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script>
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+      
+      
+      
+    </head>
+
+    <body class="theme-hype ">
+        
+            <div class="sidebar">
+                <div class="container sidebar-sticky">
+                    <div class="sidebar-about">
+                        
+                            <a href="https:&#x2F;&#x2F;etrommer.de"><h1>Elias Trommer</h1></a>
+                            
+                            <p class="lead">big data and small devices</p>
+                            
+                        
+                    </div>
+                    <ul class="sidebar-nav">
+                        
+                        
+                        <li class="sidebar-nav-item"><a href="&#x2F;blog">Blog</a></li>
+                        
+                        <li class="sidebar-nav-item"><a href="&#x2F;resume">Résumé</a></li>
+                        
+                        
+                    </ul>
+                    
+                    
+                    <div class="social-icons">
+                        
+                        <a href="&#x2F;contact"><i class="fa-solid fa-envelope"></i></a>
+                        
+                        <a href="&#x2F;atom.xml"><i class="fa-solid fa-rss"></i></a>
+                        
+                        <a href="https:&#x2F;&#x2F;github.com&#x2F;etrommer"><i class="fa-brands fa-github"></i></a>
+                        
+                        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;elias-trommer-58a085138"><i class="fa-brands fa-linkedin"></i></a>
+                        
+                        <a href="https:&#x2F;&#x2F;mastodon.online&#x2F;@jadeaffenjaeger"><i class="fa-brands fa-mastodon"></i></a>
+                        
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        
+        <div class="content container">
+            
+<div class="post">
+  <h1 class="post-title">Ultrasonic Distance Sensor from Scratch - Transmitter</h1>
+  <span class="post-date">2020-06-16</span>
+  <p>Using a MAX232 transceiver IC as a charge pump to drive an ultrasonic transducer</p>
+<span id="continue-reading"></span>
+<p>After we went over the fundamentals of the receiver, we will now go into what we need in order to transmit ultrasonic pulses. This will be much shorter than the first section, since we are esentially only (ab-)using a single component to amplify a 40kHz square wave which we generate with our MCU.</p>
+<h2 id="1-theory">1. Theory</h2>
+<p>An ultrasonic transmitter is really just a less capable version of a speaker: Something gets swung back and forth by a changing electric field, creating waves in the medium around it. For us, that means that we need to create a 40kHz square wave. The higher the amplitude of our square wave, the more energy our speaker will transmit (and the stronger the reflection we can measure becomes, meaning we get more range). The problem is: creating square waves with a positive and negative swing and
+sufficient driving power usually requires quite a few components. Not ideal for something that's supposed cheap and lightweight and relatively easy to manufacture. Luckily, someone has already gone through the trouble for us and built a component that already brings most of what we need: The <a href="https://en.wikipedia.org/wiki/MAX232">MAX232</a> is a component that is originally designed to translate <a href="https://en.wikipedia.org/wiki/RS-232">RS232</a> voltages that can range from -15V to 15V to friendlier
+0-5V TTL levels. It also packs two <a href="https://en.wikipedia.org/wiki/Charge_pump">charge pumps</a> that are capable of doubling the supply voltage range.</p>
+<h2 id="2-circuit-design">2. Circuit Design</h2>
+<p>The sender circuit is almost a verbatim copy from the reference circuit found in the datasheet</p>
+<p><img src="https://etrommer.de/blog/electronics-ultrasonic-sensor-2/circuit_sender.png" alt="Sender Circuit" /></p>
+<p>Here are the individual pins and what we are using them for:</p>
+<ul>
+<li><code>T1OUT/T2OUT</code>: High voltage outputs that will drive our speaker</li>
+<li><code>T1IN/T2IN</code>: TTL inputs that we use to control the voltage that gets applied to our speaker</li>
+<li><code>R1OUT/R2OUT/R1IN/R2IN</code> These are for receiving RS232 signals. We don't need them, so we'll simply leave them unconnected.</li>
+<li><code>C1+/C1-/C2+/C2-/VS+/VS-</code>: Storage capacitors for the two charge pumps. We'll simply stick with the value from the datasheet here and connect four 1uF ceramic capacitors. </li>
+<li><code>VCC</code> Supply voltage. There's a PNP transistor connected in series in order to disable the MAX232 when it's not needed. This should be most of the time, since we only use it to transmit a short burst and then wait for the response. Other parts like the MAX222 come with a built-in Shutdown/Enable pin to do this, but they are more expensive and harder to source.</li>
+</ul>
+<h2 id="3-code">3. Code</h2>
+<p>Unfortunately, this is something that I still have to do...</p>
+<h2 id="4-up-next">4. Up next</h2>
+<p>After we have a working circuit for sender and receiver and can emit pulses, the only thing that is missing is some ADC code the measures the delay between emitting the pulse and receiving the peak of the reflected signal.
+p</p>
+
+</div>
+
+        </div>
+    </body>
+</html>

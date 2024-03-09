@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Elias Trommer</title>
+    <subtitle>big data and small devices</subtitle>
+    <link href="https://etrommer.de/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://etrommer.de"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-06-28T00:00:00+00:00</updated>
+    <id>https://etrommer.de/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Moving my site from Jekyll to Zola</title>
+        <published>2023-06-28T00:00:00+00:00</published>
+        <updated>2023-06-28T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://etrommer.de/blog/moving-to-zola/" type="text/html"/>
+        <id>https://etrommer.de/blog/moving-to-zola/</id>
+        
+        <summary type="html">&lt;p&gt;...because who doesn&#x27;t love an occasional rewrite?&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>WS2812B PCB Art Badge</title>
+        <published>2021-11-06T00:00:00+00:00</published>
+        <updated>2021-11-06T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://etrommer.de/blog/robot-badge/" type="text/html"/>
+        <id>https://etrommer.de/blog/robot-badge/</id>
+        
+        <summary type="html">&lt;p&gt;Turning an SVG logo into a custom and functional PCB with 16 RGB LEDs, an ATTiny45 MCU and USB power from an SVG logo.&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Ultrasonic Distance Sensor from Scratch - Transmitter</title>
+        <published>2020-06-16T00:00:00+00:00</published>
+        <updated>2020-06-16T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://etrommer.de/blog/electronics-ultrasonic-sensor-2/" type="text/html"/>
+        <id>https://etrommer.de/blog/electronics-ultrasonic-sensor-2/</id>
+        
+        <summary type="html">&lt;p&gt;Using a MAX232 transceiver IC as a charge pump to drive an ultrasonic transducer&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Exporting InkScape drawings with zero clicks</title>
+        <published>2020-02-08T00:00:00+00:00</published>
+        <updated>2020-02-08T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://etrommer.de/blog/projects-inkscape-latex-graphics/" type="text/html"/>
+        <id>https://etrommer.de/blog/projects-inkscape-latex-graphics/</id>
+        
+        <summary type="html">&lt;p&gt;Workflow for automatically converting InkScape SVGs into PDFs that can seamlessly be included in LaTeX drawings.&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Ultrasonic Distance Sensor from Scratch - Receiver</title>
+        <published>2020-01-04T00:00:00+00:00</published>
+        <updated>2020-01-04T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://etrommer.de/blog/electronics-ultrasonic-sensor-1/" type="text/html"/>
+        <id>https://etrommer.de/blog/electronics-ultrasonic-sensor-1/</id>
+        
+        <summary type="html">&lt;p&gt;Theoretical foundations for dimensioning and building an analog amplifier circuit around a 40kHz ultrasonic receiver&lt;&#x2F;p&gt;
+</summary>
+        
+    </entry>
+</feed>

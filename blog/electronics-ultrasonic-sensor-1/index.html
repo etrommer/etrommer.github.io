@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <!-- viewport-fit=cover is to support iPhone X rounded corners and notch in landscape-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+
+      <title>Elias Trommer</title>
+
+      <!-- CSS -->
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      
+      <link rel="stylesheet" href="https://etrommer.de/print.css" media="print">
+      <link rel="stylesheet" href="https://etrommer.de/poole.css">
+      <link rel="stylesheet" href="https://etrommer.de/hyde.css">
+      <link rel="stylesheet" href="https://etrommer.de/custom.css">
+      
+      <link rel="stylesheet" href="https://etrommer.de/hype.css">
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+      <link rel="icon" type="image/png" href=https://etrommer.de/favicon.png />
+
+      
+      <link rel="alternate" type="application/atom+xml" title="RSS" href="https://etrommer.de/atom.xml">
+      
+
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script>
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+      
+      
+      
+    </head>
+
+    <body class="theme-hype ">
+        
+            <div class="sidebar">
+                <div class="container sidebar-sticky">
+                    <div class="sidebar-about">
+                        
+                            <a href="https:&#x2F;&#x2F;etrommer.de"><h1>Elias Trommer</h1></a>
+                            
+                            <p class="lead">big data and small devices</p>
+                            
+                        
+                    </div>
+                    <ul class="sidebar-nav">
+                        
+                        
+                        <li class="sidebar-nav-item"><a href="&#x2F;blog">Blog</a></li>
+                        
+                        <li class="sidebar-nav-item"><a href="&#x2F;resume">Résumé</a></li>
+                        
+                        
+                    </ul>
+                    
+                    
+                    <div class="social-icons">
+                        
+                        <a href="&#x2F;contact"><i class="fa-solid fa-envelope"></i></a>
+                        
+                        <a href="&#x2F;atom.xml"><i class="fa-solid fa-rss"></i></a>
+                        
+                        <a href="https:&#x2F;&#x2F;github.com&#x2F;etrommer"><i class="fa-brands fa-github"></i></a>
+                        
+                        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;elias-trommer-58a085138"><i class="fa-brands fa-linkedin"></i></a>
+                        
+                        <a href="https:&#x2F;&#x2F;mastodon.online&#x2F;@jadeaffenjaeger"><i class="fa-brands fa-mastodon"></i></a>
+                        
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        
+        <div class="content container">
+            
+<div class="post">
+  <h1 class="post-title">Ultrasonic Distance Sensor from Scratch - Receiver</h1>
+  <span class="post-date">2020-01-04</span>
+  <p>Theoretical foundations for dimensioning and building an analog amplifier circuit around a 40kHz ultrasonic receiver</p>
+<span id="continue-reading"></span>
+<p>While there are cheap, ready-made ultrasonic distance measuring sensors with good support like the ubiquitous <a href="https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf">HC-SR04</a>, I needed to roll my own for a project. I needed precise access to the timing of the impulse and the adc signal. The HC-SR04 does not handle this use case too well, because it has an integrated MCU that does most of these things internally. The HC-SR04 also only runs on 5V, which is inconvenient for projects that only use 3.3V otherwise. I also wanted to run the analog ouput signal into the MCU's ADC directly. Mainly because I wanted to play around with a few different algorithms to increase the robustness of the object detection and because I was hoping to increase the accuracy by having the resolution of an ADC running at 1MHz and with DMA attached to it. The HC-SR04 only uses a simple thresholding which can only detect a single peak. I bought a handful of <a href="https://www.murata.com/~/media/webrenewal/products/sensor/ultrasonic/open/datasheet_maopn.ashx?la=en">Murata MA40S</a> transducers and receivers a while back and thought that it would make for an interesting project to build a circuit around them.</p>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>I had trouble finding a well-documented design online, so I decided that I would make this a multi-part series on how to build a sender and receiver circuit from scratch. I'll lay out each part of the process and provide some background as well as the necessary schematics.</p>
+<p>The general idea of measuring things with ultrasound is: Send an impulse at a frequency so high that it is not audible to the human ear. The impulse will be bounced off the nearest object and return. Since it travels relatively slow, compared to the speed of an MCU, we can measure the time it takes to return and use that to calculate the distance to the reflecting object.
+If you're not familiar with the concept of ultrasonic distance measuring, check out <a href="https://lastminuteengineers.com/arduino-sr04-ultrasonic-sensor-tutorial/">this excellent tutorial</a> first! It'll walk you through how to measure distances with ultrasound. Some basic knowledge will certainly make following along a lot easier.</p>
+<h2 id="2-receiver-theory">2. Receiver Theory</h2>
+<p>The receiver circuit is probably the most complicated part of the project. It deals with analog signals and needs to amplify the important parts of an input signal. For the most part, I replicated the <a href="http://www.pcserviceselectronics.co.uk/arduino/Ultrasonic/electronics.php#circuit">HC-SR04 receiver circuit</a>. It consists of four parts:</p>
+<ol>
+<li>Inverting High-Pass Amplifier</li>
+<li>Band-Pass Amplifier</li>
+<li>Inverting High-Pass Amplifier</li>
+<li>Comparator/Thresholding Circuit</li>
+</ol>
+<p>For my design, I've more or less copied the first three stages, but replaced the last one with an envelope detection, the output of which gets fed into an ADC.</p>
+<p>Let's go over what each stage does in more detail:</p>
+<h3 id="2-1-stage-1-inverting-high-pass-amplifier">2.1. Stage 1: Inverting High Pass Amplifier</h3>
+<p>Here's a schematic of what the first stage looks like:</p>
+<p><img src="https://etrommer.de/blog/electronics-ultrasonic-sensor-1/inverting_amp.png" alt="Inverting High Pass Amplifier" /></p>
+<p>now let's go over what it does in detail. It's first order high pass, meaning that it attenuates lower frequencies while letting higher frequencies pass. First order comes from the fact that there is only one element in there that influences the frequency response, namely the capacitor. In the original circuit, the value of <strong>R1</strong> is 47k. I've increased this to be 75k, just like in Stage 3 to get a bit more amplification. Now let's do some math to find out how the circuit behaves: </p>
+$$
+\begin{aligned}
+A_v &= -\frac{R_2}{R_1}\\
+	&= -\frac{75k\Omega}{10k\Omega}\\
+	&= -75\\[1.5em]
+f_C &= \frac{1}{2 \pi \cdot R_1 \cdot C}\\
+	&= \frac{1}{2 \pi \cdot 10k\Omega \cdot 10nF}\\
+    &= 1592 \text{ kHz}
+\end{aligned}
+$$
+<p>So we're getting 7.5 times the input signal with a 3db attenuation at 1592 kHz. The fact that the input signal is inverted doesn't really matter to us, since we will detect the envelope later one anyway.</p>
+<h3 id="2-2-stage-2-bandpass">2.2. Stage 2: Bandpass</h3>
+<p>The second stage is quite a bit more complicated. While first order amplifiers can only amplify high <strong>or</strong> low frequencies, a bandpass needs more parts, but can amplify frequencies <em>around</em> a specific center frequency and attenuate everything else that's further away. We will use a rather clever circuit known as a <a href="http://www.ecircuitcenter.com/Circuits/MFB_bandpass/MFB_bandpass.htm">Multiple Feedback Band-Pass Filter</a> for this. It looks like this:</p>
+<p><img src="https://etrommer.de/blog/electronics-ultrasonic-sensor-1/mf_bandpass.png" alt="Multiple Feedback Band-Pass" /></p>
+<p>It's helps to pick <strong>C1 = C2</strong> so that the calculations are a bit easier. Here are the filter characteristics:</p>
+$$
+\begin{aligned}
+R_{1,2} &= R_1 || R_2\\
+		&= 194 \Omega\\
+f_0 	&= \frac{1}{2 \pi \cdot C \sqrt{R_{1,2} \cdot R_3}}\\
+		&= \frac{1}{2 \pi \cdot 1nF \cdot \sqrt{ 194 \Omega \cdot 75k\Omega}}\\
+		&= 41.7 \text{kHz}\\[1.5em]
+BW 		&= \frac{2}{R_3 \cdot C}\\
+		&= \frac{2}{75k\Omega \cdot 1nF}\\
+        &= 26.7 \text{kHz}\\[1.5em]
+Q 		&= \frac{1}{2} \sqrt{\frac{R_3}{R_{1,2}}}\\
+		&= \frac{1}{2} \sqrt{\frac{75k\Omega}{194 \Omega}}\\
+		&= 9.8
+\end{aligned}
+$$
+<p>This means that the filter is (roughly) centered around the carrier frequency of 40kHz and will attenuate frequencies that are 26.7kHz above and below that with 3dB. The Q factor tells us how steep the attenuation curve is.</p>
+<h3 id="2-3-stage-3-inverting-amplifier">2.3. Stage 3: Inverting amplifier</h3>
+<p>As mentioned above, this stage is the same as the first stage, which means that the characteristics will be identical.</p>
+<h3 id="2-4-simulation">2.4. Simulation</h3>
+<p>I don't have that much experience with analog design, so I recreated the circuit in <a href="https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html">LTSpice</a>, an analog circuit simulation software that you can use for free. Before I designed everything into a board, I wanted to be sure that I hadn't made any really obvious mistakes in the receiver circuit.</p>
+<p><a href="https://etrommer.de/blog/electronics-ultrasonic-sensor-1/ltspice_circuit.png"><img src="https://etrommer.de/blog/electronics-ultrasonic-sensor-1/ltspice_circuit.png" alt="LT Spice Circuit" /></a></p>
+<p>with that in place, I simulated the frequency response of stages 1-3 for frequencies between 20kHz and 60kHz.</p>
+<p><a href="https://etrommer.de/blog/electronics-ultrasonic-sensor-1/ltspice_sim.png"><img src="https://etrommer.de/blog/electronics-ultrasonic-sensor-1/ltspice_sim.png" alt="LT Spice Simulation Result" /></a></p>
+<p>It shows that the circuit has the highest amplification around 40kHz and that the amplification factor drops off steeply to both sides. Yay! It seems that - at least in theory - our circuit works as expected!</p>
+<h3 id="2-5-stage-4-envelope-detection">2.5. Stage 4: Envelope detection</h3>
+<p>Out of our amplifier stages, we are getting a 40kHz signal in which some peaks are higher than others. We could do some magic in software to retrieve the distance information from those peaks. What we would want to have ideally would be a smooth signal that is flat when nothing is detected and with a spike for each reflection. This is where <a href="https://en.wikipedia.org/wiki/Envelope_detector">Envelope Detection</a> is useful: It transforms our high-frequency signal with many peaks into its <em>envelope</em>. Here's an idealized drawing of an envelope detector on a modulated signal:</p>
+<p><img src="https://etrommer.de/blog/electronics-ultrasonic-sensor-1/envelope_ideal.png" alt="Ideal Envelope Detection" /></p>
+<p>In this drawing, our detector can - somewhat magically - predict the future, because it conveniently rises to the next peak before it has even occurred. The output of a real one will probably look a bit more rough.</p>
+<p>Here's the circuit of the envelope detection:</p>
+<p><img src="https://etrommer.de/blog/electronics-ultrasonic-sensor-1/envelope_circuit.png" alt="Envelope Detection Circuit" /></p>
+<p>Let's go over what the individual parts do: The diode <strong>D1</strong> removes the bottom half wave, leaving only the upper half. Each peak charges <strong>C1</strong>. After each peak, C1 slowly discharges through <strong>R1</strong>. R1 needs to be small enough for the voltage of C1 to decay over time, yet large enough that it doesn't drop immediately. I've experimented with the values in LTSpice until I was happy with the behavior in the simulation. <strong>C2</strong> then removes the DC component of the signal, making sure that we don't have a constant offset in our envelope. </p>
+<p>Here's what happens when we simulate the circuit it in LTSpice:</p>
+<p><a href="https://etrommer.de/blog/electronics-ultrasonic-sensor-1/ltspice_envelope_sim.png"><img src="https://etrommer.de/blog/electronics-ultrasonic-sensor-1/ltspice_envelope_sim.png" alt="LT Spice Envelope Simulation" /></a></p>
+<p>...not quite the same as the ideal one above, but good enough! (Ignore the voltages on the y-axis. They don't mean anything since our input signal will be a few mV, not Volts, like I used in the simulation)</p>
+<h2 id="3-summary">3. Summary</h2>
+<p>I hope a bit of theory helps in understanding what the different parts of the circuit are doing. When taking it apart, I find that it becomes a lot less daunting and magical.</p>
+
+</div>
+
+        </div>
+    </body>
+</html>

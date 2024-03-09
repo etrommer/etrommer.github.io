@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://etrommer.de/</loc>
+    </url>
+    <url>
+        <loc>https://etrommer.de/blog/</loc>
+    </url>
+    <url>
+        <loc>https://etrommer.de/blog/electronics-ultrasonic-sensor-1/</loc>
+        <lastmod>2020-01-04</lastmod>
+    </url>
+    <url>
+        <loc>https://etrommer.de/blog/electronics-ultrasonic-sensor-2/</loc>
+        <lastmod>2020-06-16</lastmod>
+    </url>
+    <url>
+        <loc>https://etrommer.de/blog/moving-to-zola/</loc>
+        <lastmod>2023-06-28</lastmod>
+    </url>
+    <url>
+        <loc>https://etrommer.de/blog/projects-inkscape-latex-graphics/</loc>
+        <lastmod>2020-02-08</lastmod>
+    </url>
+    <url>
+        <loc>https://etrommer.de/blog/robot-badge/</loc>
+        <lastmod>2021-11-06</lastmod>
+    </url>
+    <url>
+        <loc>https://etrommer.de/contact/</loc>
+    </url>
+    <url>
+        <loc>https://etrommer.de/resume/</loc>
+    </url>
+</urlset>
